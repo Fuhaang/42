@@ -1,0 +1,5 @@
+Credentials cache: API:ED3695E9-FBF9-4565-B568-A7B113C724FB
+        Principal: amassey@42.FR
+
+  Issued                Expires             Flags    Principal
+Feb  3 11:19:03 2020  Feb 10 11:19:03 2020  FPRIA  krbtgt/42.FR@42.FR
