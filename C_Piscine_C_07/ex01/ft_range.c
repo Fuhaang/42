@@ -1,32 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iterative_power.c                               :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 14:16:27 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/20 16:13:41 by amassey          ###   ########.fr       */
+/*   Created: 2020/02/20 13:50:31 by amassey           #+#    #+#             */
+/*   Updated: 2020/02/20 16:12:53 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_iterative_power(int nb, int power)
+#include <stdlib.h>
+#include <stdio.h>
+
+int		*ft_range(int min, int max)
 {
-	int res;
+	int size;
+	int *tab;
 	int i;
 
-	res = nb;
-	i = 2;
-	if (power < 0)
-		return (0);
-	if (power == 0)
-		return (1);
-	if (power == 1)
-		return (nb);
-	while (i <= power)
+	i = 0;
+	size = max - min;
+	if (size <= 0)
+		return (NULL);
+	tab = (int*)malloc(sizeof(*tab) * (size + 1));
+	while (min + i < max)
 	{
-		res *= nb;
+		tab[i] = min + i;
 		i++;
 	}
-	return (res);
+	tab[i] = '\0';
+	return (tab);
+}
+
+int		main(void)
+{
+	int min;
+	int max;
+	int *tab;
+
+	min = 1;
+	max = 12;
+	tab = ft_range(min, max);
+	return (0);
 }

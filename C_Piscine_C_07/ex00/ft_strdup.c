@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iterative_power.c                               :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 14:16:27 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/20 16:13:41 by amassey          ###   ########.fr       */
+/*   Created: 2020/02/20 11:20:21 by amassey           #+#    #+#             */
+/*   Updated: 2020/02/20 13:49:55 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_iterative_power(int nb, int power)
-{
-	int res;
-	int i;
+#include <stdlib.h>
 
-	res = nb;
-	i = 2;
-	if (power < 0)
-		return (0);
-	if (power == 0)
-		return (1);
-	if (power == 1)
-		return (nb);
-	while (i <= power)
-	{
-		res *= nb;
-		i++;
-	}
-	return (res);
+char	*ft_strdup(char *src)
+{
+	char	*copy;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = 0;
+	while (src[len])
+		len++;
+	copy = malloc(sizeof(*copy) * (len + 1));
+	while (i < len)
+		copy[i] = src[i++];
+	return (copy);
 }
