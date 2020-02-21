@@ -6,11 +6,9 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 13:57:11 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/18 14:07:40 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/21 13:07:48 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 int		ft_recursive_factorial(int nb)
 {
