@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 10:11:53 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/22 14:16:14 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/22 15:57:59 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		ft_same_str(char *dico, char *uservalue)
 	}
 	return (0);
 }
-/*
+
 int		ft_power(int value, int power)
 {
 	int i;
@@ -101,19 +101,71 @@ int		ft_power(int value, int power)
 	}
 	return (res);
 }
-*/
-char	*result_with_one_arg(char ***dico, char *uservalue)
+
+// Avec uservalue = 356, chiffre = 3 et emplacement = 100
+//  puis uservalue = 56, chiffre = 5 et emplacement = 10
+//  puis uservalue = 6,  chiffre = 6 et emplacement = 1
+int		ft_write_str(char ***dico, char *uservalue, int nb_key)
+{
+	int i;
+	char *actvalue;
+	char *chiffre;
+	char *emplacement;
+	int found;
+
+	actvalue = (char*)malloc(sizeof(*actvalue) * 1);
+	i = 0;
+	found = 0;
+	chiffre = "";
+	emplacement = "";
+	actvalue = uservalue;
+	while (ft_len_value(actvalue) >= 1)
+	{
+		chiffre = actvalue / ft_power(10, ft_len_value(actvalue) - 1); 
+		emplacement = ft_power(10, ft_len_value(actvalue) - 1);
+		while (i < nb_key && !(found))
+		{
+			if(ft_same_str(dico[0][i], chiffre))
+			{
+				ft_putstr(dico[1][i]);
+				found = 1;
+			}
+			i++;
+		}
+		i = 0;
+		found = 0;
+		while (i < nb_key && !(found))
+		{
+			if(ft_same_str(dico[0][i], emplacement))
+			{
+				ft_putstr(dico[1][i]);
+				found = 1;
+			}
+			i++;
+		}
+		actvalue = actvalue % ft_power(10, ft_len_value(actvalue) - 1);
+	}
+}
+
+char	*result_with_one_arg(char ***dico, char *uservalue, int nb_key)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while(dico[0][i])
+	while(i < nb_key)
 	{
 		if(ft_same_str(dico[0][i], uservalue))
-			return (dico[1][i]);
+		{
+			ft_putstr(dico[1][i]);
+			return (0);			
+		}
 		i++;
+	}
+	if(ft_write_str(dico, uservalue, nb_key))
+	{
+		return (0);	
 	}
 	ft_putstr("Dict Error\n");
 	return (0);
@@ -124,7 +176,8 @@ char	*result_with_two_arg(char ***dico, char *uservalue)
 
 }
 */
-int		main(int argc, char *argv[])
+
+int		ft_result_final(int argc, char *argv[])
 {
 	char ***dico;
 	char **key;
@@ -135,22 +188,26 @@ int		main(int argc, char *argv[])
 	value = (char**)malloc(sizeof(**value) * 1);
 	dico = (char***)malloc(sizeof(***dico) * 2);
 	res = (char*)malloc(sizeof(*res) * 1);
-	key[0] = "0";
-	value[0] = "zero";
+	key[0] = "10";
+	value[0] = "dix";
 	dico[0] = key;
 	dico[1] = value;
-
 	if(ft_error_arg(argc, argv))					//Fin du programme si argc/argv non valide
 		return (0);
 	if(argc == 2)
 	{
-		res = result_with_one_arg(dico, argv[1]);
-		if(!res)									//Resultat final si un seul arg
-			return (0);
-		ft_putstr(res);
-	}/*
+		result_with_one_arg(dico, argv[1], 1);
+		return (0);
+	}
+	/*
 	if(argc == 3)
-		result_with_two_arg(dico, argv[2]);		//Resultat final si deux args
+		result_with_two_arg(dico, argv[2]);			//Resultat final si deux args
 	*/
+	return (0);
+}
+
+int		main(int argc, char *argv[])
+{
+	ft_result_final(argc, argv);
 	return (0);
 }
