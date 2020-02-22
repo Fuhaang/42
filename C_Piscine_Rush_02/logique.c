@@ -6,12 +6,13 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 10:11:53 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/22 15:57:59 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/22 16:55:35 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void	ft_putstr(char *str)
 {
@@ -101,6 +102,34 @@ int		ft_power(int value, int power)
 	}
 	return (res);
 }
+/*   FONCTION NON CORRECT
+char	*ft_int_to_str(int nbr)
+{
+	int actunbr;
+	char *res;
+	int i;
+	int j;
+
+	actunbr = nbr;
+	i = 0;
+	j = 0;
+	while (actunbr > 9)
+	{
+		actunbr = actunbr % 10;
+		i++;
+	}
+	res = (char*)malloc(sizeof(*res) * i);
+	actunbr = nbr;
+	while (i >= 0)
+	{
+		res[j++] = actunbr / ft_power(10, i - 1);
+		i--;
+	}
+	res[j] = '\0';
+	printf("Correct answer is 7, return is : %s", res);
+	return (res);
+}
+*/
 
 // Avec uservalue = 356, chiffre = 3 et emplacement = 100
 //  puis uservalue = 56, chiffre = 5 et emplacement = 10
@@ -121,7 +150,7 @@ int		ft_write_str(char ***dico, char *uservalue, int nb_key)
 	actvalue = uservalue;
 	while (ft_len_value(actvalue) >= 1)
 	{
-		chiffre = actvalue / ft_power(10, ft_len_value(actvalue) - 1); 
+		chiffre = actvalue / ft_power(10, ft_len_value(actvalue) - 1);
 		emplacement = ft_power(10, ft_len_value(actvalue) - 1);
 		while (i < nb_key && !(found))
 		{
@@ -145,6 +174,7 @@ int		ft_write_str(char ***dico, char *uservalue, int nb_key)
 		}
 		actvalue = actvalue % ft_power(10, ft_len_value(actvalue) - 1);
 	}
+	return (0);
 }
 
 char	*result_with_one_arg(char ***dico, char *uservalue, int nb_key)
@@ -190,6 +220,9 @@ int		ft_result_final(int argc, char *argv[])
 	res = (char*)malloc(sizeof(*res) * 1);
 	key[0] = "10";
 	value[0] = "dix";
+	key[1] = "7";
+	value[1] = "sept";
+	printf("key[0] = %s\nvalue[0] = %s\n\nkey[1] = %s\nvalue[1] = %s\n", key[0], value[0], key[1], value[1]);
 	dico[0] = key;
 	dico[1] = value;
 	if(ft_error_arg(argc, argv))					//Fin du programme si argc/argv non valide
