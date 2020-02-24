@@ -6,12 +6,12 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:28:50 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/21 16:49:57 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/24 13:47:04 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_ABS_H
-#define FT_ABS_H
-#define ABS(Value) Value < 0 ? -Value : Value
+# define FT_ABS_H
+# define ABS(Value) Value < 0 ? -Value : Value
 
 #endif
