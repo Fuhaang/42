@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 13:27:51 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/21 15:13:31 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/25 13:19:21 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*ft_concat(int size, char **strs, char *sep, char *finalconcat)
 		j = 0;
 		i++;
 	}
+	finalconcat[i] = '\0';
 	return (finalconcat);
 }
 
