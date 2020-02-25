@@ -79,3 +79,22 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	finalconcat = ft_concat(size, strs, sep, finalconcat);
 	return (finalconcat);
 }
+
+
+#include <stdio.h>
+int	main(void)
+{
+		char *strs[] =
+	{
+		"Jouer",
+		"Manger",
+		"Dormir"
+	};
+
+	char sep[] = {"e"};
+
+	printf("%s", ft_strjoin(3, strs, sep));
+	// sortie: "Jou%"
+	// Voulu: "Jou rMang rDormir"
+	return (0);
+}
