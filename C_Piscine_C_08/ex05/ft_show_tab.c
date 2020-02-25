@@ -6,11 +6,17 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:23:12 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/24 13:50:16 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/25 15:32:18 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stock_str.h"
+#include <unistd.h>
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
 void	ft_putstr(char *str)
 {
@@ -38,22 +44,16 @@ void	ft_putnbr(int nb)
 void	ft_show_tab(struct s_stock_str *par)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (par[i].str)
 	{
 		ft_putstr(par[i].copy);
 		ft_putchar('\n');
-		ft_putnbr(par[i].size_param);
+		ft_putnbr(par[i].size);
 		ft_putchar('\n');
-		j = 0;
-		while (par[i].tab[j])
-		{
-			ft_putstr(par[i].tab[j]);
-			ft_putchar('\n');
-			j++;
-		}
+		ft_putstr(par[i].str);
+		ft_putchar('\n');
 		i++;
 	}
 }
