@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:17:01 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/25 16:06:21 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:11:20 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,24 @@ struct s_stock_str	*ft_strs_to_tab(int ac, char **av)
 	s_av[i].str = 0;
 	s_av[i].copy = 0;
 	return (s_av);
+}
+
+#include <stdio.h>
+int		main(void)
+{
+	int i = 0;
+	char *av[] =
+	{
+		"Manger",
+		"Jouer",
+		"Dormir"
+	};
+	t_stock_str *s_av;
+	s_av = ft_strs_to_tab(3, av);
+	while (s_av[i].size)
+	{
+		printf("%deme index :\ns_av[%d].size = %d\ns_av[%d].str = %s\ns_av[%d].copy = %s\n\n\n", i, i, s_av[i].size, i, s_av[i].str, i, s_av[i].copy);
+		i++;
+	}
+	return (0);
 }
