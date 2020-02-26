@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 13:27:51 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/26 12:36:08 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:57:11 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	char	*str;
 
 	i = 0;
-	if (size == 0)
-		return (NULL);
 	if (!(str = malloc(sizeof(char) * (ft_allstrlen(size, strs, sep) + 1))))
 		return (NULL);
 	str[0] = '\0';
+	if (size == 0)
+		return (str);
 	while (i < size - 1)
 	{
 		ft_strcat(str, strs[i]);
