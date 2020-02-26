@@ -20,7 +20,7 @@ int		ft_check_base(char *base)
 		if (base[i] == '-' || base[i] == '+' || base[i] == '\f' ||
 				base[i] == '\t' || base[i] == ' ' || base[i] == '\n' ||
 				base[i] == '\r' || base[i] == '\v' || base[i] < 32 ||
-				base[i] == 127)
+				base[i] > 126)
 			return (0);
 		j = i + 1;
 		while (base[j])
@@ -40,7 +40,7 @@ int		ft_malloc(char **nbr_c, int *sign, long *nbr_l, int *nbr)
 		return (0);
 	*sign = 1;
 	if (*nbr == 0)
-		(*nbr_c)[0] = '0';
+		*nbr_c[0] = '0';
 	if (*nbr < 0)
 	{
 		*nbr_l = *nbr;
