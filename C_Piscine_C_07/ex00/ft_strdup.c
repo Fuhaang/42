@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 11:20:21 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/25 13:25:32 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/26 12:34:45 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ char	*ft_strdup(char *src)
 	len = 0;
 	while (src[len])
 		len++;
-	copy = malloc(sizeof(*copy) * (len + 1));
+	if (!(copy = (char*)malloc(sizeof(*copy) * (len + 1))))
+		return (NULL);
 	while (i < len)
-		copy[i] = src[i++];
+	{
+		copy[i] = src[i];
+		i++;
+	}
 	copy[i] = '\0';
 	return (copy);
 }

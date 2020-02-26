@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 13:27:51 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/25 13:45:37 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/26 12:36:08 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,75 +26,53 @@ int		ft_allstrlen(int size, char **strs, char *sep)
 {
 	int		allsize;
 	int		i;
-	char	*finalconcat;
 
 	allsize = 0;
 	i = 0;
 	while (i < size)
-		allsize += ft_strlen(strs[i++]);
+	{
+		allsize += ft_strlen(strs[i]);
+		i++;
+	}
+	allsize = allsize + (size - 1) * ft_strlen(sep);
 	return (allsize);
 }
 
-char	*ft_concat(int size, char **strs, char *sep, char *finalconcat)
+char	*ft_strcat(char *dest, char *src)
 {
 	int i;
 	int j;
-	int k;
 
 	i = 0;
 	j = 0;
-	k = 0;
-	while (i < size)
-	{
-		while (strs[i][j])
-		{
-			finalconcat[k++] = strs[i][j++];
-		}
-		j = 0;
-		while (sep[j] && i < size - 1)
-			finalconcat[k++] = sep[j++];
-		j = 0;
+	while (dest[i])
 		i++;
+	while (src[j])
+	{
+		dest[i + j] = src[j];
+		j++;
 	}
-	finalconcat[i] = '\0';
-	return (finalconcat);
+	dest[i + j] = '\0';
+	return (dest);
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
-	char	*finalconcat;
 	int		i;
-	int		j;
-	int		k;
-	int		allsize;
+	char	*str;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	if (!(allsize = ft_allstrlen(size, strs, sep)))
+	if (size == 0)
 		return (NULL);
-	if (!(finalconcat = (char*)malloc((sizeof(*finalconcat) * allsize)
-				+ sizeof(*sep) * (size - 1))))
+	if (!(str = malloc(sizeof(char) * (ft_allstrlen(size, strs, sep) + 1))))
 		return (NULL);
-	finalconcat = ft_concat(size, strs, sep, finalconcat);
-	return (finalconcat);
-}
-
-
-#include <stdio.h>
-int	main(void)
-{
-		char *strs[] =
+	str[0] = '\0';
+	while (i < size - 1)
 	{
-		"Jouer",
-		"Manger",
-		"Dormir"
-	};
-
-	char sep[] = {"e"};
-
-	printf("%s", ft_strjoin(3, strs, sep));
-	// sortie: "Jou%"
-	// Voulu: "Jou rMang rDormir"
-	return (0);
+		ft_strcat(str, strs[i]);
+		ft_strcat(str, sep);
+		i++;
+	}
+	ft_strcat(str, strs[i]);
+	return (str);
 }
