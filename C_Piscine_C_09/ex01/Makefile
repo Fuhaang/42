@@ -6,7 +6,7 @@
 #    By: amassey <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 11:20:45 by amassey           #+#    #+#              #
-#    Updated: 2020/02/27 11:20:48 by amassey          ###   ########.fr        #
+#    Updated: 2020/02/27 13:11:26 by amassey          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ ${NAME} : ${OBJS}
 	ar rc ${NAME} ${OBJS}
 
 clean :
-		${RM} ${OBJTS}
-	
+		${RM} ${OBJS}
+
 fclean : clean
 		 ${RM} ${NAME}
 
