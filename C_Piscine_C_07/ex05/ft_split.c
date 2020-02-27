@@ -5,102 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/27 11:22:55 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/27 12:54:47 by amassey          ###   ########.fr       */
+/*   Created: 2020/02/27 11:20:26 by amassey           #+#    #+#             */
+/*   Updated: 2020/02/27 15:15:47 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int		ft_is_charset(char c, char *charset)
+int		count_words(char *str)
 {
-	int i;
+	int count;
 
-	i = 0;
-	while (charset[i] != '\0')
+	count = 0;
+	while (*str)
 	{
-		if (charset[i] == c)
-			return (1);
-		i++;
+		while (*str && (*str == ' ' || *str == '\n' || *str == '\t'))
+			str++;
+		if (*str && *str != ' ' && *str != '\n' && *str != '\t')
+		{
+			count++;
+			while (*str && *str != ' ' && *str != '\n' && *str != '\t')
+				str++;
+		}
 	}
-	return (0);
+	return (count);
 }
 
-int		ft_find_word(char *str, char *charset)
+char	*malloc_word(char *str)
 {
-	int i;
-	int mots;
-
-	i = 0;
-	if (!str[i])
-		return (0);
-	mots = 1;
-	while (str[i + 1] != '\0')
-	{
-		if (i == 0)
-			i++;
-		if (i != 0 && ft_is_charset(str[i], charset)
-				&& !ft_is_charset(str[i + 1], charset))
-			mots++;
-		i++;
-	}
-	return (mots);
-}
-
-char	*ft_rmpl(char *str, int size_word, int i)
-{
-	int		x;
-	char	*res;
-
-	x = 0;
-	res = malloc(sizeof(char) * (size_word + 1));
-	while (x < size_word)
-	{
-		res[x] = str[i];
-		x++;
-		i++;
-	}
-	res[x] = '\0';
-	return (res);
-}
-
-int		ft_split2(char *str, char *charset, char **tab)
-{
+	char	*word;
 	int		i;
-	int		y;
-	int		size_word;
 
 	i = 0;
-	y = 0;
-	while (str[i] != '\0')
-	{
-		size_word = 0;
-		while (!ft_is_charset(str[i], charset) && str[i] != '\0')
-		{
-			size_word++;
-			i++;
-		}
-		if (size_word != 0)
-		{
-			if (!(tab[y] = malloc(sizeof(char) * (size_word + 1))))
-				return (0);
-			tab[y] = ft_rmpl(str, size_word, i - size_word);
-			y++;
-		}
+	while (str[i] && str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
 		i++;
-	}
-	tab[y] = 0;
-	return (0);
+	word = (char *)malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
+		word[i] = str[i++];
+	word[i] = '\0';
+	return (word);
 }
 
 char	**ft_split(char *str, char *charset)
 {
+	int		words;
 	char	**tab;
+	int		i;
 
-	if (!str[0])
-		return (0);
-	if (!(tab = malloc(sizeof(char *) * (ft_find_word(str, charset) + 1))))
-		return (NULL);
-	ft_split2(str, charset, tab);
+	words = count_words(str);
+	tab = (char **)malloc(sizeof(char *) * (words + 1));
+	i = 0;
+	while (*str)
+	{
+		while (*str && (*str == ' ' || *str == '\n' || *str == '\t'))
+			str++;
+		if (*str && *str != ' ' && *str != '\n' && *str != '\t')
+		{
+			tab[i] = malloc_word(str);
+			i++;
+			while (*str && *str != ' ' && *str != '\n' && *str != '\t')
+				str++;
+		}
+	}
+	tab[i] = NULL;
 	return (tab);
 }
