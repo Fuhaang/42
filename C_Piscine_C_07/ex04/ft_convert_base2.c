@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_convert_base2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 10:27:44 by amassey           #+#    #+#             */
+/*   Updated: 2020/02/27 11:15:04 by amassey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 int		ft_strlen(char *str)
 {
 	int		i;
@@ -45,7 +57,7 @@ int		ft_is_in_base(char c, char *base)
 
 int		ft_get_int_from_base(char c, char *base)
 {
-	int		i;
+	int i;
 
 	i = 0;
 	while (base[i])
@@ -61,8 +73,8 @@ int		ft_get_int_from_base(char c, char *base)
 
 int		skip_whitespace_minus(char *str, int *ptr_i)
 {
-	int		minus_count;
-	int		i;
+	int minus_count;
+	int i;
 
 	i = 0;
 	while (str[i] == '\f' || str[i] == '\t' || str[i] == ' ' ||

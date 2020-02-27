@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_convert_base.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 10:26:43 by amassey           #+#    #+#             */
+/*   Updated: 2020/02/27 11:14:55 by amassey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
 int		ft_strlen(char *str);
@@ -109,10 +121,3 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 		return (0);
 	return (ft_getnbr_base(ft_atoi_base(nbr, base_from), base_to));
 }
-/*
-**int		main(int argc, char **argv)
-**{
-**	(void)argc;
-**	printf("%s", (ft_convert_base(argv[1], argv[2], argv[3])));
-**}
-*/
