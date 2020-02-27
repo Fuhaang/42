@@ -1,27 +1,41 @@
-NAME	= libft.a
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ccai <marvin@42.fr>                        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/02/26 02:28:43 by ccai              #+#    #+#              #
+#    Updated: 2020/02/26 18:05:35 by ccai             ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS	= ft_putchar.c ft_swap.c ft_putstr.c ft_strlen.c ft_strcmp.c
+HEADER = includes/
 
-OBJS	= ${SRCS:.c=.o}
+SRCS = srcs/ft_putchar.c srcs/ft_swap.c srcs/ft_putstr.c srcs/ft_strlen.c srcs/ft_strcmp.c
 
-CC		= gcc
-RM		= /bin/rm -f
+OBJS = ${SRCS:.c=.o}
 
-CFLAGS	= -Wall -Wextra -Werror
+NAME = libft.a
 
-${NAME}:	${OBJS}
-			${CC} ${CFLAGS} -c ${SRCS}
-		   	ar rc ${NAME} ${OBJS}
-			ranlib ${NAME}
+CC = gcc
 
-all:		${NAME}
+RM = rm -f
 
-clean:
-			${RM} ${OBJS}
+CFLAGS = -Wall -Wextra -Werror
 
-fclean:		clean
-			${RM} ${NAME}
+.c.o:
+	${CC} -c ${CFLAGS} $< -o ${<:.c=.o} -I${HEADER}
 
-re:			fclean all
+all : ${NAME}
 
-.PHONY:		all clean fclean re
+${NAME} : ${OBJS}
+	ar rc ${NAME} ${OBJS}
+
+clean :
+		${RM} ${OBJTS}
+	
+fclean : clean
+		 ${RM} ${NAME}
+
+re : 	fclean all

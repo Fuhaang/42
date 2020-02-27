@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ccai <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/26 14:58:31 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/26 20:41:47 by amassey          ###   ########.fr       */
+/*   Created: 2020/02/24 20:35:01 by ccai              #+#    #+#             */
+/*   Updated: 2020/02/26 18:17:43 by ccai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int		ft_is_sep(char c, char *charset)
+int		ft_is_charset(char c, char *charset)
 {
 	int i;
 
 	i = 0;
-	while (charset[i])
+	while (charset[i] != '\0')
 	{
 		if (charset[i] == c)
 			return (1);
@@ -26,86 +26,81 @@ int		ft_is_sep(char c, char *charset)
 	return (0);
 }
 
-int		ft_beginning_word(char c, char before_c, char *charset)
+int		ft_find_word(char *str, char *charset)
 {
-	if (!(ft_is_sep(c, charset)) && ft_is_sep(before_c, charset))
+	int i;
+	int mots;
+
+	i = 0;
+	if (!str[i])
+		return (0);
+	mots = 1;
+	while (str[i + 1] != '\0')
 	{
-		return (1);
+		if (i == 0)
+			i++;
+		if (i != 0 && ft_is_charset(str[i], charset)
+				&& !ft_is_charset(str[i + 1], charset))
+			mots++;
+		i++;
 	}
+	return (mots);
+}
+
+char	*ft_rmpl(char *str, int size_word, int i)
+{
+	int		x;
+	char	*res;
+
+	x = 0;
+	res = malloc(sizeof(char) * (size_word + 1));
+	while (x < size_word)
+	{
+		res[x] = str[i];
+		x++;
+		i++;
+	}
+	res[x] = '\0';
+	return (res);
+}
+
+int		ft_split2(char *str, char *charset, char **tab)
+{
+	int		i;
+	int		y;
+	int		size_word;
+
+	i = 0;
+	y = 0;
+	while (str[i] != '\0')
+	{
+		size_word = 0;
+		while (!ft_is_charset(str[i], charset) && str[i] != '\0')
+		{
+			size_word++;
+			i++;
+		}
+		if (size_word != 0)
+		{
+			if (!(tab[y] = malloc(sizeof(char) * (size_word + 1))))
+				return (0);
+			tab[y] = ft_rmpl(str, size_word, i - size_word);
+			y++;
+		}
+		i++;
+	}
+	tab[y] = 0;
 	return (0);
-}
-
-int		ft_count_words(char *str, char *charset)
-{
-	int i;
-	int nb_words;
-
-	i = 0;
-	nb_words = 0;
-	while (str[i])
-	{
-		if(ft_beginning_word(str[i], str[i - 1], charset)
-				|| (!(ft_is_sep(str[i], charset)) && i == 0))
-			nb_words++;
-		i++;
-	}
-	return (nb_words);
-}
-
-int		ft_size_of_word(char *str, char *charset)
-{
-	int index;
-	int i;
-	int count_words;
-	int *size_words;
-
-	i = 0;
-	index = 0;
-	count_words = ft_count_words(str, charset);
-	size_words = (int *)malloc(sizeof(size_words) * count_words);
-	while (i <= count_words)
-	{
-		size_words[i] = 0;
-		i++;
-	}
-	i = 0;
-	while (str[i])
-	{
-		if (!(ft_is_sep(str[i], charset)))
-			size_words[index] += 1;
-		else if (i > 0 && !(ft_is_sep(str[i - 1], charset)))
-			index++;
-		i++;
-	}
-	return (size_words);
 }
 
 char	**ft_split(char *str, char *charset)
 {
-	char **words;
-	int i;
-	int j;
-	int index;
-	int *size_words;
+	char	**tab;
 
-	words = malloc(sizeof(char*) * (ft_count_words(str, charset) + 1));
-	size_words = ft_count_words(str, charset);
-	index = 0;
-	j = 0;
-	i = -1;
-	while (str[++i])
-	{
-		if (!(ft_is_sep(str[i], charset)))
-		{
-			if (i == 0 || ft_beginning_word(str[i], str[i - 1], charset))
-				words[index] = malloc(sizeof(char) * size_words[index]);
-			words[index][j] = str[i];
-			j++;
-			words[index][j] = '\0';
-		}
-		else if (i > 0 && !(ft_is_sep(str[i - 1], charset)) && ++index)
-			j = 0;
-	}
-	words[ft_count_words(str, charset)] = 0;
-	return (words);
+	if (!str[0])
+		return (0);
+	if (!(tab = malloc(sizeof(char *) * (ft_find_word(str, charset) + 1))))
+		return (NULL);
+	ft_split2(str, charset, tab);
+	return (tab);
 }
