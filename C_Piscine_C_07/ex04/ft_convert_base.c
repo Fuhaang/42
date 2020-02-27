@@ -6,7 +6,7 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 10:26:43 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/27 11:14:55 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:47:22 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ int		ft_atoi_base(char *str, char *base)
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
 	if (!ft_check_base(base_from) || !ft_check_base(base_to))
-		return (0);
+		return (NULL);
 	return (ft_getnbr_base(ft_atoi_base(nbr, base_from), base_to));
 }
