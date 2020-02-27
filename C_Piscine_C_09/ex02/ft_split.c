@@ -6,68 +6,91 @@
 /*   By: amassey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 11:20:26 by amassey           #+#    #+#             */
-/*   Updated: 2020/02/27 15:14:59 by amassey          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:54:34 by amassey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int		count_words(char *str)
+int		char_is_separator(char c, char *charset)
 {
-	int count;
+	int i;
 
-	count = 0;
-	while (*str)
+	i = 0;
+	while (charset[i] != '\0')
 	{
-		while (*str && (*str == ' ' || *str == '\n' || *str == '\t'))
-			str++;
-		if (*str && *str != ' ' && *str != '\n' && *str != '\t')
-		{
-			count++;
-			while (*str && *str != ' ' && *str != '\n' && *str != '\t')
-				str++;
-		}
+		if (c == charset[i])
+			return (1);
+		i++;
 	}
-	return (count);
+	if (c == '\0')
+		return (1);
+	return (0);
 }
 
-char	*malloc_word(char *str)
+int		count_words(char *str, char *charset)
 {
-	char	*word;
-	int		i;
+	int i;
+	int words;
+
+	words = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (char_is_separator(str[i + 1], charset) == 1
+				&& char_is_separator(str[i], charset) == 0)
+			words++;
+		i++;
+	}
+	return (words);
+}
+
+void	write_word(char *dest, char *from, char *charset)
+{
+	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
+	while (char_is_separator(from[i], charset) == 0)
+	{
+		dest[i] = from[i];
 		i++;
-	word = (char *)malloc(sizeof(char) * (i + 1));
+	}
+	dest[i] = '\0';
+}
+
+void	write_split(char **split, char *str, char *charset)
+{
+	int	i;
+	int	j;
+	int word;
+
+	word = 0;
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
-		word[i] = str[i++];
-	word[i] = '\0';
-	return (word);
+	while (str[i] != '\0')
+	{
+		if (char_is_separator(str[i], charset) == 1)
+			i++;
+		else
+		{
+			j = 0;
+			while (char_is_separator(str[i + j], charset) == 0)
+				j++;
+			split[word] = (char*)malloc(sizeof(char) * (j + 1));
+			write_word(split[word], str + i, charset);
+			i += j;
+			word++;
+		}
+	}
 }
 
 char	**ft_split(char *str, char *charset)
 {
+	char	**split;
 	int		words;
-	char	**tab;
-	int		i;
 
-	words = count_words(str);
-	tab = (char **)malloc(sizeof(char *) * (words + 1));
-	i = 0;
-	while (*str)
-	{
-		while (*str && (*str == ' ' || *str == '\n' || *str == '\t'))
-			str++;
-		if (*str && *str != ' ' && *str != '\n' && *str != '\t')
-		{
-			tab[i] = malloc_word(str);
-			i++;
-			while (*str && *str != ' ' && *str != '\n' && *str != '\t')
-				str++;
-		}
-	}
-	tab[i] = NULL;
-	return (tab);
+	words = count_words(str, charset);
+	split = (char**)malloc(sizeof(char*) * (words + 1));
+	split[words] = 0;
+	write_split(split, str, charset);
+	return (split);
 }
